@@ -1,25 +1,23 @@
-var ticketsArray=[];
+let ticketsArray=[];
 
 document.getElementById('confirmWorker').addEventListener('click', saveWorker);
 
 // save workers to local storage
 function saveWorker(){
 
-  var worker = document.getElementById('workerNameInp').value;
+  const  worker = document.getElementById('workerNameInp').value;
   if (worker=="") {
     alert("Empty field")
   }
   else {
   if (localStorage.getItem('workers')===null) {
-    var workersArr = [];
-    workersArr.push(worker);
-    console.log(workersArr);
+    const workersArr = [];
+    workersArr.push(worker);   
     localStorage.setItem('workers',JSON.stringify(workersArr));
   }
   else {
-    var workers = JSON.parse(localStorage.getItem('workers'));
-    workers.push(worker);
-    console.log(workersArr);
+    const workers = JSON.parse(localStorage.getItem('workers'));
+    workers.push(worker);  
     localStorage.setItem('workers',JSON.stringify(workers));
   }
   fetchWorkers();
@@ -27,8 +25,8 @@ function saveWorker(){
 }
 // delete workers from local storage
 function deleteWorker(worker){
-  var workers = JSON.parse(localStorage.getItem('workers'));
-  for (var i = 0; i < workers.length; i++) {
+  const workers = JSON.parse(localStorage.getItem('workers'));
+  for (let i = 0; i < workers.length; i++) {
     if(workers[i]==worker){
       workers.splice(i,1);
     }
@@ -39,19 +37,19 @@ function deleteWorker(worker){
 //delete specific item in tickets array
 function deleteTicket(){
   clearOutput(document.getElementById('outputTicket'));
-  var number = document.getElementById('myNumber').value;
+  const number = document.getElementById('myNumber').value;
   ticketsArray.splice((number-1),1);
   printTickets(ticketsArray, document.getElementById('outputTicket'));
 }
 // modify ticket in array
 function modifyTicket(){
-  var number = document.getElementById('myNumber').value;
+  const number = document.getElementById('myNumber').value;
   if(ticketsArray.length===0||number>ticketsArray.length){
     alert("Error, empty list or no ticket with number.")
   }
   else {
     clearOutput(document.getElementById('outputTicket'));
-    var newTicket = prompt("Please enter ticket:","");
+    const newTicket = prompt("Please enter ticket:","");
     ticketsArray.splice((number-1),1,newTicket);
     printTickets(ticketsArray, document.getElementById('outputTicket'));
   }
@@ -65,10 +63,10 @@ function deleteTickets(){
 
 // fetch workers from local storage and display in workers Result
 function fetchWorkers(){
-  var workers = JSON.parse(localStorage.getItem('workers'));
-  var workersResult = document.getElementById('workers_result');
+  const workers = JSON.parse(localStorage.getItem('workers'));
+  const workersResult = document.getElementById('workers_result');
   workersResult.innerHTML = '';
-  for (var i = 0; i < workers.length; i++) {
+  for (let i = 0; i < workers.length; i++) {
     workersResult.innerHTML +=
                               '<div class="outputObject"><span id="span1"><p> '+(i+1) + '. ' + workers[i]+ '</span>' +
                               '<span id="span2"><button type="button" class="buttons"'+
@@ -85,23 +83,22 @@ function printTickets(a,b){
 }
 // add ticket to array
 function addTickets(){
-  var ticket = document.getElementById('ticketName').value;
+  const ticket = document.getElementById('ticketName').value;
   if(ticket==""){
     alert("Empty field");
   }
   else {
     clearOutput(document.getElementById('outputTicket'));
-    ticketsArray.push(ticket);
-    console.log(ticketsArray);
+    ticketsArray.push(ticket);   
     printTickets(ticketsArray, document.getElementById('outputTicket'));
   }
 }
 
 // shuffleArray
 function shuffleArray(arr) {
-  for (var x = arr.length - 1; x > 0; x--) {
-      var holder = Math.floor(Math.random() * (x + 1));
-      var temp = arr[x];
+  for (let x = arr.length - 1; x > 0; x--) {
+      let holder = Math.floor(Math.random() * (x + 1));
+      let temp = arr[x];
       arr[x] = arr[holder];
       arr[holder] = temp;
   }
@@ -113,29 +110,28 @@ function clearOutput(a){
 }
 
 function assignTicketSpecific(){
-  var workersArray = JSON.parse(localStorage.getItem('workers'));
-  var shuffledTicketsArray = shuffleArray(ticketsArray);
+  const workersArray = JSON.parse(localStorage.getItem('workers'));
+  const shuffledTicketsArray = shuffleArray(ticketsArray);
 }
 
 // function that assign tickets to workers with equal amount of tickets
 function assignTicketToWorkers(){
-  var assignedTickets = [];
-  var workersArray = JSON.parse(localStorage.getItem('workers'));
-  var tempAssign = "";
-  var tempTicket= "";
-  var tempWorker= "";
-  var shuffledTicketsArray = shuffleArray(ticketsArray);
-  var numberOfTickets = Number(document.getElementById('allocateNumber').value);
-  console.log(numberOfTickets);
-
+  const assignedTickets = [];
+  const workersArray = JSON.parse(localStorage.getItem('workers'));
+  let tempAssign = "";
+  let tempTicket= "";
+  let tempWorker= "";
+  let shuffledTicketsArray = shuffleArray(ticketsArray);
+  let numberOfTickets = Number(document.getElementById('allocateNumber').value);
+ 
   if(workersArray.length==0||ticketsArray.length==0||numberOfTickets==0){
     alert("No tickets or workers");
   }
   else {
-    for (var i=0;i<workersArray.length;i++){
+    for (let i=0;i<workersArray.length;i++){
         tempWorker = workersArray[i];
         console.log(tempWorker);
-    for (var j = 0; j < numberOfTickets; j++) {
+    for (let j = 0; j < numberOfTickets; j++) {
         if (typeof shuffledTicketsArray[j]=="undefined") {
         tempTicket = "<br>No ticket";
         }
@@ -153,20 +149,20 @@ function assignTicketToWorkers(){
 }
 // function that assign custom amount of tickets to each worker
 function assignTicketToWorkersSpecific(){
-  var assignedTickets = [];
-  var tempAmountArr = []
-  var tempTicket= "";
-  var workersArray = JSON.parse(localStorage.getItem('workers'));
-  var shuffledTicketsArray = shuffleArray(ticketsArray);
+  const assignedTickets = [];
+  const tempAmountArr = []
+  let tempTicket= "";
+  const workersArray = JSON.parse(localStorage.getItem('workers'));
+  const shuffledTicketsArray = shuffleArray(ticketsArray);
   const outputObject = document.getElementsByClassName('outputObject');
-  for (var i = 0; i < outputObject.length; i++) {
+  for (let i = 0; i < outputObject.length; i++) {
     tempAmountArr.push(outputObject[i].firstElementChild.firstChild.firstElementChild.lastElementChild.value);
   }
 
-  for (var i = 0; i < outputObject.length; i++) {
-    var tempAmount = tempAmountArr[i];
-    var tempWorker = workersArray[i];
-    for (var j = 0; j < tempAmount; j++) {
+  for (let i = 0; i < outputObject.length; i++) {
+    let tempAmount = tempAmountArr[i];
+    let tempWorker = workersArray[i];
+    for (let j = 0; j < tempAmount; j++) {
       if (typeof shuffledTicketsArray[j]=="undefined") {
       tempTicket = "<br>No ticket";
       }
