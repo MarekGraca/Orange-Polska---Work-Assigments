@@ -1,6 +1,14 @@
 let ticketsArray=[];
+window.onload = fetchWorkers;
 
 document.getElementById('confirmWorker').addEventListener('click', saveWorker);
+document.getElementById('confirmTicket').addEventListener('click', addTickets);
+document.getElementById('deleteNumber').addEventListener('click', deleteTicket);
+document.getElementById('modify').addEventListener('click', modifyTicket);
+document.getElementById('deleteTickets').addEventListener('click', deleteTickets);
+document.getElementById('start').addEventListener('click', assignTicketToWorkers);
+document.getElementById('specificAmount').addEventListener('click', assignTicketToWorkersSpecific);
+
 
 // save workers to local storage
 function saveWorker(){
@@ -64,16 +72,25 @@ function deleteTickets(){
 // fetch workers from local storage and display in workers Result
 function fetchWorkers(){
   const workers = JSON.parse(localStorage.getItem('workers'));
-  const workersResult = document.getElementById('workers_result');
+  const workersResult = document.getElementById('workers_result');  
   workersResult.innerHTML = '';
   for (let i = 0; i < workers.length; i++) {
     workersResult.innerHTML +=
-                              '<div class="outputObject"><span id="span1"><p> '+(i+1) + '. ' + workers[i]+ '</span>' +
-                              '<span id="span2"><button type="button" class="buttons"'+
-                              'onclick="deleteWorker(\''+workers[i]+'\')">Delete</button>'+
-                              '<input class="inputs" type="number" value="" min="1" placeholder="number of tickets" id="ticketValue"></span></p></div>'
-                              ;
+                            '<div class="outputObject"><span id="span1"><p> '+(i+1) + '. ' + workers[i]+ '</span>' +
+                            '<span id="span2"><button type="button" class="buttons delButtons"'+
+                            // 'onclick="deleteWorker(\''+workers[i]+'\')"
+                            `value = "${workers[i]}">Delete</button>`+
+                            '<input class="inputs" type="number" value="" min="1" placeholder="number of tickets" id="ticketValue"></span></p></div>'
+                            ;
                             }
+  const outputObject = document.getElementsByClassName('delButtons');
+  
+  
+  for(let i = 0; i < outputObject.length; i++) {
+    outputObject[i].addEventListener('click', () =>{
+      deleteWorker(outputObject[i].value);
+    });
+  }
 }
 // first parameter is array, second objoct in HTMl
 function printTickets(a,b){
