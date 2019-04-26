@@ -26,6 +26,15 @@ body{
  border: 1px solid #4CAF50;
  color:#ff6600;
 }
+#backToMain{
+  display: none;
+  padding-left: 50px;
+  padding-top: 50px;
+}
+#backToMain:hover{
+  color: bisque;
+  cursor: pointer;
+}
 .clear{
   clear: both;
 }
@@ -56,6 +65,9 @@ header h1{
   height: auto;
   float: left;
 }
+#service .buttons{
+  height: 40px;
+}
 #service .containerTickets{
   width: 70%;
   text-align: center;
@@ -75,6 +87,7 @@ header h1{
 }
 #service .containerButtons .buttons{
   width: 200px;
+  height: 40px;
 }
 #service #workers_result .inputs{
   width: 50%;
@@ -91,10 +104,11 @@ header h1{
   padding: 0px;
 }
 #service #workers_result .buttons{
-  width: 30%;
+  width: 40%;
   margin-left: 5px;
   margin-right: 5px;
   padding: 0px;
+  height: 20px;
 }
 #service .inputs{
   width: 100%;
@@ -141,6 +155,7 @@ header h1{
   }
   #service input, #service .buttons, #service .containerButtons .buttons{
     width: 100%;
+    border: 3px white solid;
   }
   #service #workers_result li{
     display: block;
